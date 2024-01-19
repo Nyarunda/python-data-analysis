@@ -12,17 +12,19 @@ from sqlalchemy import create_engine
 
 connection_string = "DRIVER={ODBC Driver 17 for SQL Server};SERVER=localhost;DATABASE=Strategic;UID=ezra;PWD=07Nyarunda"
 connection_url = URL.create("mssql+pyodbc", query={"odbc_connect": connection_string})
-#print(connection_string)
+print(connection_string)
 
 
-#print(connection_url)
+print(connection_url)
 
 engine = create_engine(connection_url)
 
-#print(engine)
+print(engine)
 
-df = pd.read_csv('C:/Users/Ezra/Documents/Data Analysis/archive/artist.csv')
+files = ['artist','canvas_size','image_link','museum','museum_hours','product_size','subject','work']
 
-insert = df.to_sql('artist',con=engine,if_exists='replace',index=False)
+for file in files:
+    df = pd.read_csv(f'C:/Users/Ezra/Documents/Data Analysis/archive/{file}.csv')
+    insert = df.to_sql(file,con=engine,if_exists='replace',index=False)
 
-#print(df.info)
+print(df.info)
